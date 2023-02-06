@@ -163,7 +163,8 @@ If you find this project useful consider giving the YouTube video a like / this 
 
 If you find an issue with the project don't hesitate reporting it in the [project issues tab](https://github.com/ttarnowski/serverless-product-api/issues) :)
 
-Thank you for your support, Tomasz.
+Thank you for your support.
+Tomasz.
 
 ## Licence
 
