@@ -1,12 +1,13 @@
 {
-  "name": "ts-serverless-openapi",
+  "name": "openapi-products",
   "version": "1.0.0",
-  "description": "TypeScript + OpenAPI + Serverless project template",
+  "description": "Products REST API",
   "scripts": {
-    "test": "tsoa spec-and-routes && jest --silent",
-    "test:verbose": "tsoa spec-and-routes && jest",
-    "test:watch": "concurrently \"jest --silent --watchAll\" \"nodemon -x tsoa spec-and-routes\"",
-    "test:watch:verbose": "concurrently \"jest --watchAll\" \"nodemon -x tsoa spec-and-routes\"",
+    "docker": "docker compose up -d dynamodb",
+    "test": "npm run docker && tsoa spec-and-routes && jest --runInBand --silent",
+    "test:verbose": "npm run docker && tsoa spec-and-routes && jest --runInBand",
+    "test:watch": "npm run docker && concurrently \"jest --silent --watchAll --runInBand\" \"nodemon -x tsoa spec-and-routes\"",
+    "test:watch:verbose": "npm run docker && concurrently \"jest --watchAll --runInBand\" \"nodemon -x tsoa spec-and-routes\"",
     "deploy": "serverless deploy",
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\"",
     "build": "tsoa spec-and-routes && tsc",
@@ -37,6 +38,8 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.226.0",
+    "@aws-sdk/util-dynamodb": "^3.226.0",
     "@vendia/serverless-express": "^4.10.1",
     "aws-lambda": "^1.0.7",
     "config": "^3.3.8",

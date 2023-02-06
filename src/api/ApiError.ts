@@ -1,3 +1,9 @@
+export type ApiErrorJSON = {
+  message: string;
+  type: string;
+  details?: unknown;
+};
+
 export class ApiError extends Error {
   public statusCode: number;
   public type: string;

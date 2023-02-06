@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { ValidateError } from "tsoa";
+import { FieldErrors, ValidateError } from "tsoa";
 import { ApiError } from "./api/ApiError";
 import { AuthError } from "./api/auth/middleware";
+
+export type ValidateErrorJSON = {
+  message: string;
+  //
+  details: FieldErrors;
+};
 
 export function errorHandler(err: unknown, req: Request, res: Response, next: NextFunction): Response | void {
   if (err instanceof ValidateError) {

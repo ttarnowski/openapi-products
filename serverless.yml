@@ -25,41 +25,42 @@ provider:
   runtime: nodejs16.x
   lambdaHashingVersion: 20201221
   memorySize: 256
+  stage: ${opt:stage, 'dev'}
 
-# you can overwrite defaults here
-#  stage: dev
-#  region: eu-west-1
+  # you can overwrite defaults here
+  #  stage: dev
+  #  region: eu-west-1
 
-# you can add statements to the Lambda function's IAM Role here
-#  iam:
-#    role:
-#      statements:
-#        - Effect: "Allow"
-#          Action:
-#            - "dynamodb:PutItem"
-#            - "dynamodb:GetItem"
-#            - "dynamodb:DeleteItem"
-#            - "dynamodb:Scan"
-#          Resource:
-#            - { "Fn::GetAtt": ["NewDynamoDBTable", "Arn"] }
-#        - Effect: "Allow"
-#          Action:
-#            - "s3:ListBucket"
-#          Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#        - Effect: "Allow"
-#          Action:
-#            - "s3:PutObject"
-#          Resource:
-#            Fn::Join:
-#              - ""
-#              - - "arn:aws:s3:::"
-#                - "Ref" : "ServerlessDeploymentBucket"
-#                - "/*"
+  # you can add statements to the Lambda function's IAM Role here
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+          Resource:
+            - { "Fn::GetAtt": ["ProductsTable", "Arn"] }
+  #        - Effect: "Allow"
+  #          Action:
+  #            - "s3:ListBucket"
+  #          Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+  #        - Effect: "Allow"
+  #          Action:
+  #            - "s3:PutObject"
+  #          Resource:
+  #            Fn::Join:
+  #              - ""
+  #              - - "arn:aws:s3:::"
+  #                - "Ref" : "ServerlessDeploymentBucket"
+  #                - "/*"
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-#    NEW_DYNAMODB_TABLE_NAME: ${self:provider.stage}NewDynamoDBTable
+  # you can define service wide environment variables here
+  environment:
+    PRODUCTS_TABLE_NAME: ${self:provider.stage}Products
+    NODE_ENV: development
 
 # you can add packaging information here
 package:
@@ -119,20 +120,20 @@ functions:
 
 plugins:
   - serverless-plugin-typescript
-#resources:
-#  Resources:
-#    NewDynamoDBTable:
-#      Type: AWS::DynamoDB::Table
-#      Properties:
-#        TableName: ${self:provider.environment.NEW_DYNAMODB_TABLE_NAME}
-#         # cheapest for the beginning
-#         BillingMode: PAY_PER_REQUEST
-#         AttributeDefinitions:
-#           - AttributeName: FieldID
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: FieldID
-#             KeyType: HASH
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.PRODUCTS_TABLE_NAME}
+        # cheapest for the beginning
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: ProductID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ProductID
+            KeyType: HASH
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
