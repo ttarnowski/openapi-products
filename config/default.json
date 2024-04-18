@@ -1,0 +1,14 @@
+{
+  "server": {
+    "port": 3000
+  },
+  "authSecret": "secret",
+  "dynamodb": {
+    "endpoint": "http://localhost:8000"
+  },
+  "dbTables": {
+    "products": {
+      "name": "Products"
+    }
+  }
+}

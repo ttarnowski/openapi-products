@@ -1,0 +1,9 @@
+{
+  "server": {
+    "port": 4001
+  },
+  "dynamodb": {
+    "endpoint": "http://localhost:8000"
+  },
+  "authSecret": "secret"
+}
